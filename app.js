@@ -11,7 +11,7 @@ const services={
 hi:{recharge:['मोबाइल रिचार्ज — जल्द आ रहा है','यह सुविधा अधिकृत रिचार्ज पार्टनर जुड़ने के बाद उपलब्ध होगी।'],dth:['DTH और बिल — जल्द आ रहा है','यह सुविधा अभी निर्माणाधीन है।'],finance:['फाइनेंस — जल्द आ रहा है','वित्तीय सेवाएँ अधिकृत पार्टनर के माध्यम से शुरू होंगी।'],retailer:['रिटेलर पार्टनर — जल्द आ रहा है','रिटेलर रजिस्ट्रेशन और KYC सुविधा जल्द शुरू होगी।']},
 en:{recharge:['Mobile Recharge — Coming Soon','This service will be available after an authorized recharge partner is connected.'],dth:['DTH & Bills — Coming Soon','This service is under development.'],finance:['Finance — Coming Soon','Financial services will be offered through authorized partners.'],retailer:['Retailer Partner — Coming Soon','Retailer registration and KYC will be available soon.']}
 };
-document.querySelector('.services').addEventListener('click',e=>{const b=e.target.closest('[data-service]');if(b){if(b.dataset.service==='support'){$('help').scrollIntoView({behavior:'smooth'});return}const x=services[lang][b.dataset.service];pop(x[0],x[1])}});
+document.querySelector('.services').addEventListener('click',e=>{const b=e.target.closest('[data-service]');if(b){if(b.dataset.service==='support'){$('help').scrollIntoView({behavior:'smooth'});return}if(b.dataset.service==='repair'){$('repair-dialog').showModal();return}const x=services[lang][b.dataset.service];pop(x[0],x[1])}});
 $('search').addEventListener('input',render);document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-cat]').forEach(x=>x.classList.remove('chosen'));b.classList.add('chosen');cat=b.dataset.cat;render()});
 $('explore').onclick=()=>$('services').scrollIntoView({behavior:'smooth'});$('all').onclick=()=>{cat='all';document.querySelectorAll('[data-cat]').forEach(x=>x.classList.toggle('chosen',x.dataset.cat==='all'));$('search').value='';render()};
 $('profile').onclick=()=>{if(window.myWorldUser){if(confirm(lang==='hi'?'क्या आप लॉगआउट करना चाहते हैं?':'Do you want to log out?'))window.myWorldLogout?.();return}$('login-dialog').showModal()};
@@ -42,6 +42,8 @@ const translations={
 '[data-service="finance"] small':['वित्तीय सेवाएँ','Financial Services'],
 '[data-service="retailer"] b':['रिटेलर बनें','Become a Retailer'],
 '[data-service="retailer"] small':['बिज़नेस पार्टनर','Business Partner'],
+'[data-service="repair"] b':['मोबाइल रिपेयरिंग','Mobile Repairing'],
+'[data-service="repair"] small':['रिपेयरिंग रिक्वेस्ट भेजें','Send repair request'],
 '[data-service="support"] b':['हेल्प सेंटर','Help Center'],
 '[data-service="support"] small':['कॉल और ईमेल सपोर्ट','Call & Email Support'],
 '#shop .heading label':['राजेश्वर डिजिटल सेल्स से खरीदें','SHOP FROM RAJESHWAR DIGITAL SALES'],
@@ -94,10 +96,33 @@ document.querySelector('.partner button').textContent=next==='hi'?'जल्द 
 $('search').placeholder=next==='hi'?'प्रोडक्ट खोजें...':'Search products...';
 $('phone-number').placeholder=next==='hi'?'10 अंकों का मोबाइल नंबर':'10-digit mobile number';
 $('otp-code').placeholder=next==='hi'?'6 अंकों का OTP':'6-digit OTP';
+translateRepair();
 render();window.dispatchEvent(new CustomEvent('myworld-language-change',{detail:{lang:next}}));
 }
 $('lang').onclick=()=>setLanguage(lang==='hi'?'en':'hi');
 setLanguage(lang);
+
+
+const repairTexts={
+hi:{title:'मोबाइल रिपेयरिंग सर्विस',intro:'अपनी जानकारी भरें। रिक्वेस्ट WhatsApp पर भेजी जाएगी।',name:'ग्राहक का नाम *',phone:'मोबाइल नंबर *',address:'पूरा पता *',model:'मोबाइल कंपनी / मॉडल',problem:'मोबाइल में क्या समस्या है? *',consent:'मैं अपनी दी गई जानकारी रिपेयरिंग सहायता के लिए WhatsApp पर भेजने की सहमति देता/देती हूँ।',note:'आपकी जानकारी इस वेबसाइट पर सेव नहीं होगी। WhatsApp खुलने के बाद Send दबाना होगा।',submit:'WhatsApp पर रिक्वेस्ट भेजें ↗',phonePlaceholder:'10 अंकों का नंबर',modelPlaceholder:'जैसे Samsung A15'},
+en:{title:'Mobile Repairing Service',intro:'Enter your details to prepare a repair request for WhatsApp.',name:'Customer name *',phone:'Mobile number *',address:'Full address *',model:'Phone brand / model',problem:'Describe the phone problem *',consent:'I agree to share the information I entered through WhatsApp for repair support.',note:'This website does not save your details. You must tap Send after WhatsApp opens.',submit:'Send request on WhatsApp ↗',phonePlaceholder:'10-digit number',modelPlaceholder:'e.g. Samsung A15'}
+};
+function translateRepair(){
+const t=repairTexts[lang];
+for(const [key,id] of Object.entries({title:'repair-title',intro:'repair-intro',name:'repair-name-label',phone:'repair-phone-label',address:'repair-address-label',model:'repair-model-label',problem:'repair-problem-label',consent:'repair-consent-label',note:'repair-note',submit:'repair-submit'}))$(id).textContent=t[key];
+$('repair-phone').placeholder=t.phonePlaceholder;$('repair-model').placeholder=t.modelPlaceholder;
+}
+$('close-repair').onclick=()=>$('repair-dialog').close();
+$('repair-form').addEventListener('submit',e=>{
+e.preventDefault();
+const form=e.currentTarget;if(!form.reportValidity())return;
+const name=$('repair-name').value.trim(),phone=$('repair-phone').value.trim(),address=$('repair-address').value.trim(),model=$('repair-model').value.trim(),problem=$('repair-problem').value.trim();
+if(!name||!/^[6-9][0-9]{9}$/.test(phone)||!address||!problem||!$('repair-consent').checked)return;
+const message=['MY WORLD - Mobile Repair Request','Customer Name: '+name,'Mobile Number: '+phone,'Address: '+address,'Phone Model: '+(model||'Not specified'),'Problem: '+problem].join('\n');
+const url='https://wa.me/917572805685?text='+encodeURIComponent(message);
+const opened=window.open(url,'_blank','noopener,noreferrer');
+if(!opened)window.location.href=url;
+});
 
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 let installPrompt=null;window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;});$('install').addEventListener('click',async()=>{if(installPrompt){const prompt=installPrompt;installPrompt=null;await prompt.prompt();return}pop(lang==='hi'?'MY WORLD इंस्टॉल करें':'Install MY WORLD',lang==='hi'?'Android Chrome में मेनू (⋮) खोलकर Add to Home screen या Install app चुनें। iPhone Safari में Share → Add to Home Screen चुनें।':'In Android Chrome, open the menu (⋮) and choose Add to Home screen or Install app. On iPhone Safari, choose Share → Add to Home Screen.')});window.addEventListener('appinstalled',()=>{$('install').hidden=true});
