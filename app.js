@@ -100,9 +100,6 @@ translateRepair();
 render();window.dispatchEvent(new CustomEvent('myworld-language-change',{detail:{lang:next}}));
 }
 $('lang').onclick=()=>setLanguage(lang==='hi'?'en':'hi');
-setLanguage(lang);
-
-
 const repairTexts={
 hi:{title:'मोबाइल रिपेयरिंग सर्विस',intro:'अपनी जानकारी भरें। रिक्वेस्ट WhatsApp पर भेजी जाएगी।',name:'ग्राहक का नाम *',phone:'मोबाइल नंबर *',address:'पूरा पता *',model:'मोबाइल कंपनी / मॉडल',problem:'मोबाइल में क्या समस्या है? *',consent:'मैं अपनी दी गई जानकारी रिपेयरिंग सहायता के लिए WhatsApp पर भेजने की सहमति देता/देती हूँ।',note:'आपकी जानकारी इस वेबसाइट पर सेव नहीं होगी। WhatsApp खुलने के बाद Send दबाना होगा।',submit:'WhatsApp पर रिक्वेस्ट भेजें ↗',phonePlaceholder:'10 अंकों का नंबर',modelPlaceholder:'जैसे Samsung A15'},
 en:{title:'Mobile Repairing Service',intro:'Enter your details to prepare a repair request for WhatsApp.',name:'Customer name *',phone:'Mobile number *',address:'Full address *',model:'Phone brand / model',problem:'Describe the phone problem *',consent:'I agree to share the information I entered through WhatsApp for repair support.',note:'This website does not save your details. You must tap Send after WhatsApp opens.',submit:'Send request on WhatsApp ↗',phonePlaceholder:'10-digit number',modelPlaceholder:'e.g. Samsung A15'}
@@ -112,6 +109,7 @@ const t=repairTexts[lang];
 for(const [key,id] of Object.entries({title:'repair-title',intro:'repair-intro',name:'repair-name-label',phone:'repair-phone-label',address:'repair-address-label',model:'repair-model-label',problem:'repair-problem-label',consent:'repair-consent-label',note:'repair-note',submit:'repair-submit'}))$(id).textContent=t[key];
 $('repair-phone').placeholder=t.phonePlaceholder;$('repair-model').placeholder=t.modelPlaceholder;
 }
+setLanguage(lang);
 $('close-repair').onclick=()=>$('repair-dialog').close();
 $('repair-form').addEventListener('submit',e=>{
 e.preventDefault();
