@@ -1,28 +1,29 @@
 <!doctype html>
 <html lang="hi"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101a3a"><title>MY WORLD</title>
+<meta name="theme-color" content="#101a3a"><meta name="description" content="MY WORLD — recharge, shopping and digital services in one place.">
+<title>MY WORLD — Your World, One App</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css">
 </head><body>
-<header class="top"><a class="brand" href="#"><img class="brand-logo" src="assets/my-world-logo.png" alt="MY WORLD logo"><span>MY <b>WORLD</b><small>YOUR WORLD, ONE APP</small></span></a><div><button id="lang">हिंदी</button><button id="profile" class="avatar">R</button></div></header>
+<header class="top"><a class="brand" href="#" aria-label="MY WORLD home"><span class="brand-mark">M<span>W</span></span><span>MY <b>WORLD</b><small>YOUR WORLD, ONE APP</small></span></a><div><button id="lang">हिंदी / EN</button><button id="profile" class="avatar" aria-label="Account">R</button></div></header>
 <main class="wrap">
 <section class="hero"><div class="hero-text"><label>✦ YOUR DIGITAL WORLD</label><h1>सब कुछ अब<br><em>MY WORLD</em> में</h1><p>रिचार्ज, शॉपिंग और रोज़मर्रा की डिजिटल सेवाएँ — एक ही जगह।</p><button id="explore" class="whitebtn">सेवाएँ देखें　↗</button></div><div class="orb">MW</div><span class="float f1">⚡ Recharge</span><span class="float f2">🛍 Shopping</span></section>
 <section class="stats"><div>⚡ <span><b>तेज़ सेवाएँ</b><small>आसान एक्सेस</small></span></div><div>🔒 <span><b>सुरक्षित अनुभव</b><small>विश्वसनीय प्लेटफॉर्म</small></span></div><div>🌐 <span><b>एक ही प्लेटफॉर्म</b><small>कई सुविधाएँ</small></span></div></section>
 <section id="services"><div class="heading"><div><label>MADE FOR YOU</label><h2>हमारी सर्विसेज़</h2></div><small>अपनी जरूरत चुनें</small></div><div class="services">
-<button data-service="recharge"><i class="purple">▰</i><b>मोबाइल रिचार्ज</b><small>प्रीपेड / पोस्टपेड</small><span>↗</span></button>
-<button data-service="dth"><i class="orange">▣</i><b>DTH & बिल</b><small>टीवी और यूटिलिटी</small><span>↗</span></button>
-<a class="service-link" href="https://rajeshwardigitalsales.smartbiz.in" target="_blank" rel="noopener noreferrer"><i class="green">◇</i><b>ऑनलाइन शॉपिंग</b><small>Rajeshwar Digital Sales</small><span>↗</span></a>
-<button data-service="finance"><i class="blue">₹</i><b>फाइनेंस</b><small>वित्तीय सेवाएँ</small><span>↗</span></button>
-<button data-service="retailer"><i class="pink">♧</i><b>रिटेलर बनें</b><small>बिज़नेस पार्टनर</small><span>↗</span></button>
-<button data-service="support"><i class="gray">?</i><b>हेल्प सेंटर</b><small>हमसे संपर्क करें</small><span>↗</span></button>
+<button data-service="recharge"><i class="purple">▰</i><b>मोबाइल रिचार्ज</b><small>प्रीपेड / पोस्टपेड</small><span class="soon">COMING SOON</span></button>
+<button data-service="dth"><i class="orange">▣</i><b>DTH & बिल</b><small>टीवी और यूटिलिटी</small><span class="soon">COMING SOON</span></button>
+<a class="service-link" href="https://rajeshwardigitalsales.smartbiz.in/" target="_blank" rel="noopener noreferrer"><i class="green">◇</i><b>ऑनलाइन शॉपिंग</b><small>Rajeshwar Digital Sales</small><span>↗</span></a>
+<button data-service="finance"><i class="blue">₹</i><b>फाइनेंस</b><small>वित्तीय सेवाएँ</small><span class="soon">COMING SOON</span></button>
+<button data-service="retailer"><i class="pink">♧</i><b>रिटेलर बनें</b><small>बिज़नेस पार्टनर</small><span class="soon">COMING SOON</span></button>
+<button data-service="support"><i class="gray">?</i><b>हेल्प सेंटर</b><small>सपोर्ट सुविधा</small><span class="soon">COMING SOON</span></button>
 </div></section>
 <section id="shop"><div class="heading"><div><label>HANDPICKED FOR YOU</label><h2>ट्रेंडिंग प्रोडक्ट्स</h2></div><button id="all" class="link">सभी देखें ↗</button></div>
-<div class="search"><span>⌕</span><input id="search" placeholder="प्रोडक्ट खोजें..."></div>
-<div class="chips"><button class="chosen" data-cat="all">सभी</button><button data-cat="audio">ऑडियो</button><button data-cat="charging">चार्जिंग</button><button data-cat="power">पावर</button></div><div id="products" class="products"></div></section>
-<section class="partner"><div><label>GROW WITH MY WORLD</label><h2>हमारे रिटेलर पार्टनर बनें</h2><p>अपने बिज़नेस को डिजिटल दुनिया से जोड़ें।</p><button data-service="retailer">और जानें ↗</button></div><strong>✦</strong></section>
-<section class="about" id="about"><div class="heading"><div><label>ABOUT THE FOUNDER</label><h2>About Us</h2></div></div><div class="about-card"><img src="assets/rahul-kumawat.jpg" alt="Mr. Rahul Kumawat, Founder of MY WORLD"><div class="about-copy"><span class="founder-tag">FOUNDER</span><h2>Mr. Rahul Kumawat</h2><p>Rajeshwar Mobile has been active in the e-commerce sector for the past five years and aims to launch its own platform in the near future. The company operates across three categories—offline, online, and gaming platforms—under the strategic leadership of Mr. Rahul Kumawat.</p><p class="about-brand">Founder – MY WORLD | Rajeshwar Mobile</p></div></div></section>
-<section class="about" id="about"><div class="heading"><div><label>ABOUT THE FOUNDER</label><h2>About Us</h2></div></div><div class="about-card"><img src="assets/rahul-kumawat.jpg" alt="Mr. Rahul Kumawat, Founder of MY WORLD"><div class="about-copy"><span class="founder-tag">FOUNDER</span><h2>Mr. Rahul Kumawat</h2><p>Rajeshwar Mobile has been active in the e-commerce sector for the past five years and aims to launch its own platform in the near future. The company operates across three categories—offline, online, and gaming platforms—under the strategic leadership of Mr. Rahul Kumawat.</p><p class="about-brand">Founder – MY WORLD | Rajeshwar Mobile</p></div></div></section>
-<p class="note">नोट: यह MY WORLD का शुरुआती डेमो है। वास्तविक रिचार्ज, भुगतान, वॉलेट और फाइनेंस सेवाएँ अभी सक्रिय नहीं हैं। इनके लिए अधिकृत पार्टनर API और सुरक्षित बैकएंड आवश्यक होंगे।</p>
+<div class="search"><span>⌕</span><input id="search" placeholder="प्रोडक्ट खोजें..." aria-label="Search products"></div>
+<div class="chips"><button class="chosen" data-cat="all">सभी</button><button data-cat="audio">ऑडियो</button><button data-cat="charging">चार्जिंग</button><button data-cat="power">पावर</button></div><div id="products" class="products"></div>
+<p class="shop-note">ये केवल डेमो प्रोडक्ट हैं। खरीदारी के लिए <a href="https://rajeshwardigitalsales.smartbiz.in/" target="_blank" rel="noopener">Rajeshwar Digital Sales</a> पर जाएँ।</p></section>
+<section class="partner"><div><label>GROW WITH MY WORLD</label><h2>हमारे रिटेलर पार्टनर बनें</h2><p>रिटेलर सुविधा जल्द शुरू होगी।</p><button data-service="retailer">COMING SOON</button></div><strong>✦</strong></section>
+<section class="about" id="about"><div class="heading"><div><label>ABOUT THE FOUNDER</label><h2>About Us</h2></div></div><div class="about-card"><div class="founder-placeholder" aria-label="Rahul Kumawat initials">RK</div><div class="about-copy"><span class="founder-tag">FOUNDER</span><h2>Mr. Rahul Kumawat</h2><p>Rajeshwar Mobile has been active in the e-commerce sector for the past five years and aims to launch its own platform in the near future. The company operates across three categories—offline, online, and gaming platforms—under the strategic leadership of Mr. Rahul Kumawat.</p><p class="about-brand">Founder – MY WORLD | Rajeshwar Mobile</p></div></div></section>
+<p class="note">नोट: MY WORLD अभी शुरुआती डेमो है। रिचार्ज, बिल भुगतान, फाइनेंस और अन्य सेवाएँ अधिकृत पार्टनर और सुरक्षित सिस्टम जुड़ने के बाद शुरू होंगी।</p>
 </main>
-<nav class="bottom"><button class="active" data-nav="home">⌂<small>होम</small></button><button data-nav="shop">◇<small>शॉपिंग</small></button><button data-nav="orders">▤<small>ऑर्डर</small></button><button data-nav="account">◉<small>अकाउंट</small></button></nav>
-<dialog id="modal"><form method="dialog"><button class="x">×</button><label>MY WORLD</label><h2 id="mt">सेवा</h2><p id="mb"></p><button class="ok">समझ गया</button></form></dialog><div id="toast"></div><script src="app.js"></script></body></html>
+<nav class="bottom"><button class="active" data-nav="home">⌂<small>होम</small></button><button data-nav="shop">◇<small>शॉपिंग</small></button><button data-nav="orders">▤<small>कार्ट <b id="cart-count">0</b></small></button><button data-nav="account">◉<small>अकाउंट</small></button></nav>
+<dialog id="modal"><form method="dialog"><button class="x" aria-label="Close">×</button><label>MY WORLD</label><h2 id="mt">सेवा</h2><p id="mb"></p><button class="ok">समझ गया</button></form></dialog><div id="toast" role="status"></div><script src="app.js"></script></body></html>
