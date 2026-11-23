@@ -94,7 +94,7 @@ document.querySelector('.partner button').textContent=next==='hi'?'जल्द 
 $('search').placeholder=next==='hi'?'प्रोडक्ट खोजें...':'Search products...';
 $('phone-number').placeholder=next==='hi'?'10 अंकों का मोबाइल नंबर':'10-digit mobile number';
 $('otp-code').placeholder=next==='hi'?'6 अंकों का OTP':'6-digit OTP';
-render();
+render();window.dispatchEvent(new CustomEvent('myworld-language-change',{detail:{lang:next}}));
 }
 $('lang').onclick=()=>setLanguage(lang==='hi'?'en':'hi');
 setLanguage(lang);
