@@ -6,12 +6,5 @@
   "display": "standalone",
   "background_color": "#f7f8fc",
   "theme_color": "#101a3a",
-  "icons": [
-    {
-      "src": "./assets/app-icon.png",
-      "sizes": "1536x1024",
-      "type": "image/png",
-      "purpose": "any"
-    }
-  ]
+  "description": "Your world, one app."
 }
