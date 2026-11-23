@@ -4,16 +4,100 @@ const productsData=[
 {id:3,hi:'COOLPODS BT',en:'COOLPODS BT',price:499,mrp:999,cat:'audio',tag:'50% OFF'},
 {id:4,hi:'EVM 10000mAh मेगासेफ पावर बैंक',en:'EVM 10000mAh Megasafe Powerbank',price:1649,mrp:3999,cat:'power',tag:'58% OFF'}
 ];
-let lang='hi',cat='all';const $=id=>document.getElementById(id);
-function render(){const q=$('search').value.trim().toLowerCase();const rows=productsData.filter(p=>(cat==='all'||p.cat===cat)&&(p[lang].toLowerCase().includes(q)||p.en.toLowerCase().includes(q))); $('products').innerHTML=rows.map(p=>`<article class="product"><div class="art"><span class="tag">${p.tag}</span><span class="photo-pending">Rajeshwar Digital Sales</span></div><div class="pinfo"><b>${p[lang]}</b><small><s>₹${p.mrp.toLocaleString('en-IN')}</s> • Rajeshwar Digital Sales</small><div class="pfoot"><span class="price">₹${p.price.toLocaleString('en-IN')}</span><a class="add" href="https://rajeshwardigitalsales.smartbiz.in/best-sellers" target="_blank" rel="noopener noreferrer">${lang==='hi'?'खरीदें ↗':'Buy ↗'}</a></div></div></article>`).join('')||'<p>कोई प्रोडक्ट नहीं मिला</p>'}
+let lang=localStorage.getItem('myworld-lang')==='en'?'en':'hi',cat='all';const $=id=>document.getElementById(id);
+function render(){const q=$('search').value.trim().toLowerCase();const rows=productsData.filter(p=>(cat==='all'||p.cat===cat)&&(p[lang].toLowerCase().includes(q)||p.en.toLowerCase().includes(q))); $('products').innerHTML=rows.map(p=>`<article class="product"><div class="art"><span class="tag">${p.tag}</span><span class="photo-pending">Rajeshwar Digital Sales</span></div><div class="pinfo"><b>${p[lang]}</b><small><s>₹${p.mrp.toLocaleString('en-IN')}</s> • Rajeshwar Digital Sales</small><div class="pfoot"><span class="price">₹${p.price.toLocaleString('en-IN')}</span><a class="add" href="https://rajeshwardigitalsales.smartbiz.in/best-sellers" target="_blank" rel="noopener noreferrer">${lang==='hi'?'खरीदें ↗':'Buy ↗'}</a></div></div></article>`).join('')||(lang==='hi'?'<p>कोई प्रोडक्ट नहीं मिला</p>':'<p>No products found</p>')}
 function pop(title,body){$('mt').textContent=title;$('mb').textContent=body;$('modal').showModal()}
-const services={recharge:['मोबाइल रिचार्ज — COMING SOON','यह सुविधा अभी शुरू नहीं हुई है। अधिकृत रिचार्ज पार्टनर जुड़ने के बाद उपलब्ध होगी।'],dth:['DTH और बिल — COMING SOON','यह सुविधा अभी निर्माणाधीन है।'],finance:['फाइनेंस — COMING SOON','वित्तीय सेवाएँ सत्यापित और अधिकृत पार्टनर के माध्यम से ही शुरू होंगी।'],retailer:['रिटेलर पार्टनर — COMING SOON','रिटेलर रजिस्ट्रेशन और KYC सुविधा जल्द शुरू होगी।'],support:['हेल्प सेंटर','कॉल और ईमेल सपोर्ट उपलब्ध है।']};
-document.querySelector('.services').addEventListener('click',e=>{const b=e.target.closest('[data-service]');if(b){if(b.dataset.service==='support'){$('help').scrollIntoView({behavior:'smooth'});return}const x=services[b.dataset.service];pop(x[0],x[1])}});
+const services={
+hi:{recharge:['मोबाइल रिचार्ज — जल्द आ रहा है','यह सुविधा अधिकृत रिचार्ज पार्टनर जुड़ने के बाद उपलब्ध होगी।'],dth:['DTH और बिल — जल्द आ रहा है','यह सुविधा अभी निर्माणाधीन है।'],finance:['फाइनेंस — जल्द आ रहा है','वित्तीय सेवाएँ अधिकृत पार्टनर के माध्यम से शुरू होंगी।'],retailer:['रिटेलर पार्टनर — जल्द आ रहा है','रिटेलर रजिस्ट्रेशन और KYC सुविधा जल्द शुरू होगी।']},
+en:{recharge:['Mobile Recharge — Coming Soon','This service will be available after an authorized recharge partner is connected.'],dth:['DTH & Bills — Coming Soon','This service is under development.'],finance:['Finance — Coming Soon','Financial services will be offered through authorized partners.'],retailer:['Retailer Partner — Coming Soon','Retailer registration and KYC will be available soon.']}
+};
+document.querySelector('.services').addEventListener('click',e=>{const b=e.target.closest('[data-service]');if(b){if(b.dataset.service==='support'){$('help').scrollIntoView({behavior:'smooth'});return}const x=services[lang][b.dataset.service];pop(x[0],x[1])}});
 $('search').addEventListener('input',render);document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-cat]').forEach(x=>x.classList.remove('chosen'));b.classList.add('chosen');cat=b.dataset.cat;render()});
-$('lang').onclick=()=>{lang=lang==='hi'?'en':'hi';$('lang').textContent=lang==='hi'?'हिंदी / EN':'English / HI';document.querySelector('.hero h1').innerHTML=lang==='hi'?'सब कुछ अब<br><em>MY WORLD</em> में':'Everything in<br><em>MY WORLD</em>';document.querySelector('.hero p').textContent=lang==='hi'?'रिचार्ज, शॉपिंग और रोज़मर्रा की डिजिटल सेवाएँ — एक ही जगह।':'Recharge, shopping and everyday digital services — all in one place.';render()};
 $('explore').onclick=()=>$('services').scrollIntoView({behavior:'smooth'});$('all').onclick=()=>{cat='all';document.querySelectorAll('[data-cat]').forEach(x=>x.classList.toggle('chosen',x.dataset.cat==='all'));$('search').value='';render()};
-$('profile').onclick=()=>{if(window.myWorldUser){if(confirm('क्या आप लॉगआउट करना चाहते हैं?'))window.myWorldLogout?.();return}$('login-dialog').showModal()};
-document.querySelector('.partner button').onclick=()=>pop(...services.retailer);
+$('profile').onclick=()=>{if(window.myWorldUser){if(confirm(lang==='hi'?'क्या आप लॉगआउट करना चाहते हैं?':'Do you want to log out?'))window.myWorldLogout?.();return}$('login-dialog').showModal()};
+document.querySelector('.partner button').onclick=()=>pop(...services[lang].retailer);
 document.querySelector('.bottom').addEventListener('click',e=>{const b=e.target.closest('[data-nav]');if(!b)return;document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.nav==='home')scrollTo({top:0,behavior:'smooth'});else if(b.dataset.nav==='shop')$('shop').scrollIntoView({behavior:'smooth'});else if(b.dataset.nav==='account')$('about').scrollIntoView({behavior:'smooth'});else window.open('https://rajeshwardigitalsales.smartbiz.in/','_blank','noopener,noreferrer')});
-render();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-let installPrompt=null;window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;});$('install').addEventListener('click',async()=>{if(installPrompt){const prompt=installPrompt;installPrompt=null;await prompt.prompt();return}pop('MY WORLD इंस्टॉल करें','Android Chrome में ब्राउज़र मेनू (⋮) खोलें और Add to Home screen या Install app चुनें। iPhone Safari में Share → Add to Home Screen चुनें।')});window.addEventListener('appinstalled',()=>{$('install').hidden=true});
+
+// Full bilingual interface. Translation affects visible copy, not phone numbers, prices or external URLs.
+const translations={
+'header .brand small':['YOUR WORLD, ONE APP','YOUR WORLD, ONE APP'],
+'.hero label':['✦ आपका डिजिटल संसार','✦ YOUR DIGITAL WORLD'],
+'.hero p':['रिचार्ज, शॉपिंग और रोज़मर्रा की डिजिटल सेवाएँ — एक ही जगह।','Recharge, shopping and everyday digital services — all in one place.'],
+'#explore':['सेवाएँ देखें ↗','Explore services ↗'],
+'.stats>div:nth-child(1) b':['तेज़ सेवाएँ','Quick access'],
+'.stats>div:nth-child(1) small':['आसान एक्सेस','Easy to use'],
+'.stats>div:nth-child(2) b':['सुरक्षित अनुभव','Secure experience'],
+'.stats>div:nth-child(2) small':['विश्वसनीय प्लेटफॉर्म','Trusted platform'],
+'.stats>div:nth-child(3) b':['एक ही प्लेटफॉर्म','One platform'],
+'.stats>div:nth-child(3) small':['कई सुविधाएँ','Many services'],
+'#services .heading label':['आपके लिए','MADE FOR YOU'],
+'#services .heading h2':['हमारी सर्विसेज़','Our Services'],
+'#services .heading>small':['अपनी जरूरत चुनें','Choose a service'],
+'[data-service="recharge"] b':['मोबाइल रिचार्ज','Mobile Recharge'],
+'[data-service="recharge"] small':['प्रीपेड / पोस्टपेड','Prepaid / Postpaid'],
+'[data-service="dth"] b':['DTH और बिल','DTH & Bills'],
+'[data-service="dth"] small':['टीवी और यूटिलिटी','TV & Utilities'],
+'.service-link b':['ऑनलाइन शॉपिंग','Online Shopping'],
+'[data-service="finance"] b':['फाइनेंस','Finance'],
+'[data-service="finance"] small':['वित्तीय सेवाएँ','Financial Services'],
+'[data-service="retailer"] b':['रिटेलर बनें','Become a Retailer'],
+'[data-service="retailer"] small':['बिज़नेस पार्टनर','Business Partner'],
+'[data-service="support"] b':['हेल्प सेंटर','Help Center'],
+'[data-service="support"] small':['कॉल और ईमेल सपोर्ट','Call & Email Support'],
+'#shop .heading label':['राजेश्वर डिजिटल सेल्स से खरीदें','SHOP FROM RAJESHWAR DIGITAL SALES'],
+'#shop .heading h2':['चुनिंदा प्रोडक्ट्स','Featured Products'],
+'#all':['सभी देखें ↗','View all ↗'],
+'[data-cat="all"]':['सभी','All'],
+'[data-cat="audio"]':['ऑडियो','Audio'],
+'[data-cat="charging"]':['चार्जिंग','Charging'],
+'[data-cat="power"]':['पावर','Power'],
+'.shop-note':['प्रोडक्ट की उपलब्धता और अंतिम कीमत वेबसाइट पर जाँचें। खरीदारी के लिए {SHOP} पर जाएँ।','Check availability and final prices on the website. Shop at {SHOP}.'],
+'#help .heading label':['हम आपकी सहायता के लिए हैं','WE ARE HERE TO HELP'],
+'#help .heading h2':['सहायता और संपर्क','Help & Support'],
+'.help-card>p':['किसी भी सहायता या जानकारी के लिए हमसे संपर्क करें।','Contact us for help or information.'],
+'.contact-row:nth-of-type(1) b':['कॉल सपोर्ट','Call Support'],
+'.contact-row:nth-of-type(2) b':['व्हाट्सऐप चैट','WhatsApp Chat'],
+'.contact-row:nth-of-type(2) small':['सीधे WhatsApp पर सहायता लें','Chat with us on WhatsApp'],
+'.contact-row:nth-of-type(3) b':['ईमेल सपोर्ट','Email Support'],
+'.contact-row:nth-of-type(4) b':['दूसरा ईमेल','Alternate Email'],
+'.partner label':['MY WORLD के साथ आगे बढ़ें','GROW WITH MY WORLD'],
+'.partner h2':['हमारे रिटेलर पार्टनर बनें','Become a Retail Partner'],
+'.partner p':['रिटेलर सुविधा जल्द शुरू होगी।','Retailer services are coming soon.'],
+'#about .heading label':['संस्थापक के बारे में','ABOUT THE FOUNDER'],
+'#about .heading h2':['हमारे बारे में','About Us'],
+'.founder-tag':['संस्थापक','FOUNDER'],
+'.about-copy>p:first-of-type':['राजेश्वर मोबाइल पिछले पाँच वर्षों से ई-कॉमर्स क्षेत्र में सक्रिय है और निकट भविष्य में अपना प्लेटफॉर्म शुरू करने का लक्ष्य रखता है। श्री राहुल कुमावत के नेतृत्व में कंपनी ऑफलाइन, ऑनलाइन और गेमिंग—तीन क्षेत्रों में काम करती है।','Rajeshwar Mobile has been active in the e-commerce sector for the past five years and aims to launch its own platform in the near future. The company operates across three categories—offline, online, and gaming platforms—under the strategic leadership of Mr. Rahul Kumawat.'],
+'.note':['नोट: MY WORLD पर शॉपिंग के लिए Rajeshwar Digital Sales की लाइव वेबसाइट खुलती है। रिचार्ज, बिल भुगतान, फाइनेंस और अन्य सेवाएँ अधिकृत पार्टनर और सुरक्षित सिस्टम जुड़ने के बाद शुरू होंगी।','Note: Shopping opens the live Rajeshwar Digital Sales website. Recharge, bill payment, finance and other services will launch after authorized partners and secure systems are connected.'],
+'[data-nav="home"] small':['होम','Home'],
+'[data-nav="shop"] small':['शॉपिंग','Shopping'],
+'[data-nav="orders"] small':['ऑर्डर','Orders'],
+'[data-nav="account"] small':['अकाउंट','Account'],
+'#login-form h2':['मोबाइल नंबर से लॉगिन','Log in with mobile number'],
+'#login-form>p:first-of-type':['OTP से सुरक्षित लॉगिन करें।','Sign in securely with OTP.'],
+'#send-otp':['OTP भेजें','Send OTP'],
+'#verify-otp':['OTP वेरिफाई करें','Verify OTP'],
+'#modal .ok':['समझ गया','Got it']
+};
+function setLanguage(next){
+lang=next;localStorage.setItem('myworld-lang',next);document.documentElement.lang=next;
+$('lang').textContent=next==='hi'?'हिंदी / EN':'English / HI';
+$('install').textContent=next==='hi'?'इंस्टॉल करें':'Install';
+document.querySelector('.hero h1').innerHTML=next==='hi'?'सब कुछ अब<br><em>MY WORLD</em> में':'Everything in<br><em>MY WORLD</em>';
+for(const [selector,values] of Object.entries(translations)){
+const el=document.querySelector(selector);if(!el)continue;
+const value=values[next==='hi'?0:1];
+if(selector==='.shop-note'){el.innerHTML=value.replace('{SHOP}','<a href="https://rajeshwardigitalsales.smartbiz.in/" target="_blank" rel="noopener noreferrer">Rajeshwar Digital Sales</a>')}
+else el.textContent=value;
+}
+document.querySelectorAll('.soon').forEach(el=>el.textContent=next==='hi'?'जल्द आ रहा है':'COMING SOON');
+document.querySelector('.partner button').textContent=next==='hi'?'जल्द आ रहा है':'COMING SOON';
+$('search').placeholder=next==='hi'?'प्रोडक्ट खोजें...':'Search products...';
+$('phone-number').placeholder=next==='hi'?'10 अंकों का मोबाइल नंबर':'10-digit mobile number';
+$('otp-code').placeholder=next==='hi'?'6 अंकों का OTP':'6-digit OTP';
+render();
+}
+$('lang').onclick=()=>setLanguage(lang==='hi'?'en':'hi');
+setLanguage(lang);
+
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+let installPrompt=null;window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;});$('install').addEventListener('click',async()=>{if(installPrompt){const prompt=installPrompt;installPrompt=null;await prompt.prompt();return}pop(lang==='hi'?'MY WORLD इंस्टॉल करें':'Install MY WORLD',lang==='hi'?'Android Chrome में मेनू (⋮) खोलकर Add to Home screen या Install app चुनें। iPhone Safari में Share → Add to Home Screen चुनें।':'In Android Chrome, open the menu (⋮) and choose Add to Home screen or Install app. On iPhone Safari, choose Share → Add to Home Screen.')});window.addEventListener('appinstalled',()=>{$('install').hidden=true});
