@@ -124,3 +124,7 @@ if(!opened)window.location.href=url;
 
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 let installPrompt=null;window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;});$('install').addEventListener('click',async()=>{if(installPrompt){const prompt=installPrompt;installPrompt=null;await prompt.prompt();return}pop(lang==='hi'?'MY WORLD इंस्टॉल करें':'Install MY WORLD',lang==='hi'?'Android Chrome में मेनू (⋮) खोलकर Add to Home screen या Install app चुनें। iPhone Safari में Share → Add to Home Screen चुनें।':'In Android Chrome, open the menu (⋮) and choose Add to Home screen or Install app. On iPhone Safari, choose Share → Add to Home Screen.')});window.addEventListener('appinstalled',()=>{$('install').hidden=true});
+
+// Informational RCoin value calculator. No wallet balance or issuance is simulated.
+const rcoinInput=document.getElementById('rcoin-input');
+if(rcoinInput){const updateRCoin=()=>{const raw=Number(rcoinInput.value);const count=Number.isFinite(raw)?Math.max(0,Math.floor(raw)):0;document.getElementById('rcoin-value').textContent='₹'+(count*0.015).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})};rcoinInput.addEventListener('input',updateRCoin);updateRCoin()}
