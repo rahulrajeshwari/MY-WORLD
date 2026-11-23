@@ -1,11 +1,11 @@
 const productsData=[
-{id:1,hi:'वायरलेस ईयरबड्स',en:'Wireless Earbuds',price:799,cat:'audio',tag:'POPULAR'},
-{id:2,hi:'फास्ट चार्जर',en:'Fast Charger',price:499,cat:'charging',tag:'VALUE'},
-{id:3,hi:'ब्लूटूथ स्पीकर',en:'Bluetooth Speaker',price:1199,cat:'audio',tag:'TRENDING'},
-{id:4,hi:'पावर बैंक',en:'Power Bank',price:999,cat:'power',tag:'TOP PICK'}
+{id:1,hi:'MYPODS CORE NB6',en:'MYPODS CORE NB6',price:980,mrp:1999,cat:'audio',tag:'50% OFF'},
+{id:2,hi:'मोबाइल टेबल यूनिवर्सल स्टैंड',en:'Professional Mobile Table Universal Stand',price:599,mrp:999,cat:'charging',tag:'40% OFF'},
+{id:3,hi:'COOLPODS BT',en:'COOLPODS BT',price:499,mrp:999,cat:'audio',tag:'50% OFF'},
+{id:4,hi:'EVM 10000mAh मेगासेफ पावर बैंक',en:'EVM 10000mAh Megasafe Powerbank',price:1649,mrp:3999,cat:'power',tag:'58% OFF'}
 ];
 let lang='hi',cat='all',cart=[];const $=id=>document.getElementById(id);
-function render(){const q=$('search').value.trim().toLowerCase();const rows=productsData.filter(p=>(cat==='all'||p.cat===cat)&&(p[lang].toLowerCase().includes(q)||p.en.toLowerCase().includes(q)));$('products').innerHTML=rows.map(p=>`<article class="product"><div class="art"><span class="tag">${p.tag}</span><span class="photo-pending">फोटो जल्द जोड़ी जाएगी</span></div><div class="pinfo"><b>${p[lang]}</b><small>MY WORLD • Demo item</small><div class="pfoot"><span class="price">₹${p.price.toLocaleString('en-IN')}</span><button class="add" data-add="${p.id}">${lang==='hi'?'जोड़ें +':'Add +'}</button></div></div></article>`).join('')||'<p>कोई प्रोडक्ट नहीं मिला</p>'}
+function render(){const q=$('search').value.trim().toLowerCase();const rows=productsData.filter(p=>(cat==='all'||p.cat===cat)&&(p[lang].toLowerCase().includes(q)||p.en.toLowerCase().includes(q))); $('products').innerHTML=rows.map(p=>`<article class="product"><div class="art"><span class="tag">${p.tag}</span><span class="photo-pending">Rajeshwar Digital Sales</span></div><div class="pinfo"><b>${p[lang]}</b><small><s>₹${p.mrp.toLocaleString('en-IN')}</s> • Rajeshwar Digital Sales</small><div class="pfoot"><span class="price">₹${p.price.toLocaleString('en-IN')}</span><a class="add" href="https://rajeshwardigitalsales.smartbiz.in/best-sellers" target="_blank" rel="noopener noreferrer">${lang==='hi'?'खरीदें ↗':'Buy ↗'}</a></div></div></article>`).join('')||'<p>कोई प्रोडक्ट नहीं मिला</p>'}
 function pop(title,body){$('mt').textContent=title;$('mb').textContent=body;$('modal').showModal()}
 const services={recharge:['मोबाइल रिचार्ज — COMING SOON','यह सुविधा अभी शुरू नहीं हुई है। अधिकृत रिचार्ज पार्टनर जुड़ने के बाद उपलब्ध होगी।'],dth:['DTH और बिल — COMING SOON','यह सुविधा अभी निर्माणाधीन है।'],finance:['फाइनेंस — COMING SOON','वित्तीय सेवाएँ सत्यापित और अधिकृत पार्टनर के माध्यम से ही शुरू होंगी।'],retailer:['रिटेलर पार्टनर — COMING SOON','रिटेलर रजिस्ट्रेशन और KYC सुविधा जल्द शुरू होगी।'],support:['हेल्प सेंटर — COMING SOON','आधिकारिक सपोर्ट संपर्क जल्द उपलब्ध होगा।']};
 document.querySelector('.services').addEventListener('click',e=>{const b=e.target.closest('[data-service]');if(b){if(b.dataset.service==='support'){$('help').scrollIntoView({behavior:'smooth'});return}const x=services[b.dataset.service];pop(x[0],x[1])}});
