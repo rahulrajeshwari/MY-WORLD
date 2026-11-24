@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "myWorldRepairs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "billingBackups",
+      "fieldPath": "payload",
+      "indexes": []
+    }
+  ]
+}

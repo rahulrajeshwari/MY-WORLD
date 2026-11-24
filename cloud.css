@@ -1,0 +1,29 @@
+body:has(> .cloud) {
+  margin: 0;
+  background: #f1f5fc;
+  color: #17345f;
+  font: 16px system-ui, sans-serif;
+}
+.cloud {
+  margin: 1rem auto;
+  padding: 1rem;
+  max-width: 48rem;
+  overflow-wrap: anywhere;
+}
+.cloud[hidden], .cloud [hidden] { display: none; }
+.cloud label { display: block; margin: .75rem 0; }
+.cloud input, .cloud textarea, .cloud select, .cloud button {
+  font: inherit;
+  padding: .65rem;
+  border-radius: .5rem;
+  border: 1px solid #b6c8e2;
+  max-width: 100%;
+}
+.cloud button {
+  background: #1758bd;
+  color: white;
+  cursor: pointer;
+  margin: .25rem;
+}
+.cloud button:disabled { opacity: .55; cursor: default; }
+.cloud li { margin: .75rem 0; }

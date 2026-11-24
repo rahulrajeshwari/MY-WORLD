@@ -14,7 +14,12 @@ en:{privatechat:['Customer Private Chat — Coming Soon','This feature is coming
 document.querySelector('.services').addEventListener('click',e=>{const b=e.target.closest('[data-service]');if(b){if(b.dataset.service==='support'){$('help').scrollIntoView({behavior:'smooth'});return}if(b.dataset.service==='repair'){$('repair-dialog').showModal();return}const x=services[lang][b.dataset.service];pop(x[0],x[1])}});
 $('search').addEventListener('input',render);document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-cat]').forEach(x=>x.classList.remove('chosen'));b.classList.add('chosen');cat=b.dataset.cat;render()});
 $('explore').onclick=()=>$('services').scrollIntoView({behavior:'smooth'});$('all').onclick=()=>{cat='all';document.querySelectorAll('[data-cat]').forEach(x=>x.classList.toggle('chosen',x.dataset.cat==='all'));$('search').value='';render()};
-$('profile').onclick=()=>{if(window.myWorldUser){if(confirm(lang==='hi'?'क्या आप लॉगआउट करना चाहते हैं?':'Do you want to log out?'))window.myWorldLogout?.();return}$('login-dialog').showModal()};
+function openAccount() {
+  if (window.myWorldUser) location.href = './account.html';
+  else $('login-dialog').showModal();
+}
+$('profile').onclick = openAccount;
+if (location.hash === '#login') openAccount();
 document.querySelector('.partner button').onclick=()=>pop(...services[lang].retailer);
 document.querySelector('.bottom').addEventListener('click',e=>{const b=e.target.closest('[data-nav]');if(!b)return;document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.nav==='home')scrollTo({top:0,behavior:'smooth'});else if(b.dataset.nav==='shop')$('shop').scrollIntoView({behavior:'smooth'});else if(b.dataset.nav==='account')$('about').scrollIntoView({behavior:'smooth'});else window.open('https://rajeshwardigitalsales.smartbiz.in/','_blank','noopener,noreferrer')});
 
@@ -75,6 +80,7 @@ const translations={
 '[data-nav="account"] small':['अकाउंट','Account'],
 '#login-form h2':['मोबाइल नंबर से लॉगिन','Log in with mobile number'],
 '#login-form>p:first-of-type':['OTP से सुरक्षित लॉगिन करें।','Sign in securely with OTP.'],
+'#phone-privacy':['OTP भेजने पर Google आपका मोबाइल नंबर धोखाधड़ी और स्पैम रोकने के लिए प्राप्त और संग्रहीत करता है।','When you request an OTP, Google receives and stores your phone number for fraud and spam prevention.'],
 '#send-otp':['OTP भेजें','Send OTP'],
 '#verify-otp':['OTP वेरिफाई करें','Verify OTP'],
 '#modal .ok':['समझ गया','Got it']

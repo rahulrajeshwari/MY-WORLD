@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard | MY WORLD</title>
+<link rel="stylesheet" href="./cloud.css">
+</head>
+<body>
+<main class="cloud">
+  <a href="./account.html">← Customer Profile</a>
+  <h1>Admin Dashboard</h1>
+  <h2>Repair requests</h2>
+  <p id="repair-status" role="status">Checking access…</p>
+  <a id="repair-login" href="./index.html#login" hidden>Sign in with mobile OTP</a>
+  <button id="repair-refresh" type="button" hidden>Refresh requests</button>
+  <ol id="repair-results"></ol>
+</main>
+<script type="module" src="./repair-tracking.js"></script>
+</body>
+</html>
