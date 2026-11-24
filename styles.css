@@ -68,3 +68,39 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #8190
 
 /* MY WORLD pinned favorite categories */
 .pinned-favorites{margin-bottom:22px;padding:16px;border:1px solid #dce5fb;background:#eef3ff;border-radius:20px}.pinned-favorites[hidden]{display:none!important}.pinned-favorites .heading{margin-bottom:12px}.pinned-favorites .services{margin-bottom:0}.services>a,.services>button{position:relative}.services .pin-toggle{position:absolute!important;right:9px!important;bottom:9px!important;top:auto!important;left:auto!important;width:30px!important;height:30px!important;min-height:30px!important;display:grid!important;place-items:center!important;padding:0!important;border-radius:50%!important;border:1px solid #d8e1f2!important;background:#f2f6ff!important;color:#4568ac!important;font-size:18px!important;line-height:1!important;z-index:3!important;box-shadow:none!important;transform:none!important}.services .pin-toggle.active{background:#e3edff!important;border-color:#91b1f5!important}.services>a,.services>button{padding-bottom:42px!important}
+
+/* MY WORLD account v104 */
+#login-dialog{width:min(94vw,410px);max-width:94vw;max-height:92vh;max-height:92dvh;overflow:auto;margin:auto;border-radius:24px;background:#fff;color:#172344}
+#login-dialog *{box-sizing:border-box}
+#login-dialog [hidden]{display:none!important}
+#login-form{padding:24px clamp(16px,5vw,28px);gap:10px;min-width:0;width:100%;max-width:100%;font-family:inherit}
+#login-form .x{top:12px;right:12px;color:#65708a;width:34px;height:34px;padding:0;border-radius:50%;background:#f2f4fa;line-height:1}
+.account-brand{display:flex;align-items:center;gap:10px;margin-bottom:5px;font-size:13px;letter-spacing:1px}
+.account-brand span{display:grid;place-items:center;width:42px;height:42px;background:#293eaa;color:white;border-radius:12px;font-size:15px;font-weight:800;letter-spacing:-1px}
+#login-form h2{font-size:26px;line-height:1.2;color:#172344}
+#account-guest,#account-member,#register-fields{display:grid;gap:9px;min-width:0}
+.account-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#edf1f9;padding:4px;border-radius:12px;margin:8px 0}
+#login-form button{font-family:inherit;cursor:pointer}
+.account-tabs button{border:0;background:transparent;color:#64718a;border-radius:9px;padding:11px 5px;font-weight:700;font-size:13px}
+.account-tabs button[aria-pressed=true]{background:#fff;color:#293eaa;box-shadow:0 1px 5px #17234418}
+#login-form label{font-size:12px;font-weight:650;color:#34425e;letter-spacing:0;margin-top:3px}
+#login-form input{display:block;width:100%;min-width:0;max-width:100%;height:46px;border:1px solid #dce2ed;border-radius:10px;padding:0 12px;background:#f8faff;color:#172344;font-size:16px;outline:none}
+#login-form input:focus{border-color:#5266d7;box-shadow:0 0 0 3px #5266d71a}
+.account-password-wrap{position:relative;min-width:0}
+.account-password-wrap input{padding-right:66px!important}
+#account-show{position:absolute;right:6px;top:5px;height:36px;border:0;background:transparent;color:#354cbd;font-size:12px;font-weight:700;padding:0 8px}
+#account-reset{justify-self:end;border:0;background:none;color:#354cbd;font-size:12px;font-weight:700;padding:3px 0 7px}
+#account-submit{width:100%;min-height:46px;background:#263ba5;border-radius:11px;font-size:15px}
+.account-or{display:flex;align-items:center;gap:12px;color:#8790a2;font-size:12px;margin:4px 0}
+.account-or:before,.account-or:after{content:"";height:1px;background:#e3e7ef;flex:1}
+#account-google,#account-member button{width:100%;min-height:44px;border:1px solid #dce2ed;background:#fff;color:#263550;border-radius:10px;font-size:13px;font-weight:650;padding:10px}
+#account-google{display:flex;align-items:center;justify-content:center;gap:10px}
+.account-g{font-size:20px;color:#4285f4;font-weight:800}
+#login-form .account-otp{text-align:center;color:#8490a3;margin-top:4px;font-size:11px}
+#register-fields small{font-size:11px;color:#65708a}
+#account-details{white-space:pre-line;overflow-wrap:anywhere;background:#f4f7ff;border-radius:12px;padding:14px}
+#account-logout{color:#b42318!important}
+#login-message{overflow-wrap:anywhere;background:#f0f4ff;padding:10px;border-radius:9px}
+#login-message:empty{display:none}
+.account-footer{text-align:center;font-size:10px;color:#8993a6;border-top:1px solid #edf0f5;padding-top:12px;margin-top:4px}
+#login-form button:disabled{opacity:.55;cursor:wait}
