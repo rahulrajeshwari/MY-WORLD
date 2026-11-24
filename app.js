@@ -14,9 +14,9 @@ en:{privatechat:['Customer Private Chat — Coming Soon','This feature is coming
 document.querySelector('.services').addEventListener('click',e=>{const b=e.target.closest('[data-service]');if(b){if(b.dataset.service==='support'){$('help').scrollIntoView({behavior:'smooth'});return}if(b.dataset.service==='repair'){$('repair-dialog').showModal();return}const x=services[lang][b.dataset.service];pop(x[0],x[1])}});
 $('search').addEventListener('input',render);document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-cat]').forEach(x=>x.classList.remove('chosen'));b.classList.add('chosen');cat=b.dataset.cat;render()});
 $('explore').onclick=()=>$('services').scrollIntoView({behavior:'smooth'});$('all').onclick=()=>{cat='all';document.querySelectorAll('[data-cat]').forEach(x=>x.classList.toggle('chosen',x.dataset.cat==='all'));$('search').value='';render()};
-$('profile').onclick=()=>{if(window.myWorldUser){if(confirm(lang==='hi'?'क्या आप लॉगआउट करना चाहते हैं?':'Do you want to log out?'))window.myWorldLogout?.();return}$('login-dialog').showModal()};
+$('profile').onclick=()=>$('login-dialog').showModal();
 document.querySelector('.partner button').onclick=()=>pop(...services[lang].retailer);
-document.querySelector('.bottom').addEventListener('click',e=>{const b=e.target.closest('[data-nav]');if(!b)return;document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.nav==='home')scrollTo({top:0,behavior:'smooth'});else if(b.dataset.nav==='shop')$('shop').scrollIntoView({behavior:'smooth'});else if(b.dataset.nav==='account')$('about').scrollIntoView({behavior:'smooth'});else window.open('https://rajeshwardigitalsales.smartbiz.in/','_blank','noopener,noreferrer')});
+document.querySelector('.bottom').addEventListener('click',e=>{const b=e.target.closest('[data-nav]');if(!b)return;document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.nav==='home')scrollTo({top:0,behavior:'smooth'});else if(b.dataset.nav==='shop')$('shop').scrollIntoView({behavior:'smooth'});else if(b.dataset.nav==='account')$('login-dialog').showModal();else window.open('https://rajeshwardigitalsales.smartbiz.in/','_blank','noopener,noreferrer')});
 
 // Full bilingual interface. Translation affects visible copy, not phone numbers, prices or external URLs.
 const translations={
@@ -73,10 +73,6 @@ const translations={
 '[data-nav="shop"] small':['शॉपिंग','Shopping'],
 '[data-nav="orders"] small':['ऑर्डर','Orders'],
 '[data-nav="account"] small':['अकाउंट','Account'],
-'#login-form h2':['मोबाइल नंबर से लॉगिन','Log in with mobile number'],
-'#login-form>p:first-of-type':['OTP से सुरक्षित लॉगिन करें।','Sign in securely with OTP.'],
-'#send-otp':['OTP भेजें','Send OTP'],
-'#verify-otp':['OTP वेरिफाई करें','Verify OTP'],
 '#modal .ok':['समझ गया','Got it']
 };
 function setLanguage(next){
@@ -93,8 +89,6 @@ else el.textContent=value;
 document.querySelectorAll('.soon').forEach(el=>el.textContent=next==='hi'?'जल्द आ रहा है':'COMING SOON');
 document.querySelector('.partner button').textContent=next==='hi'?'जल्द आ रहा है':'COMING SOON';
 $('search').placeholder=next==='hi'?'प्रोडक्ट खोजें...':'Search products...';
-$('phone-number').placeholder=next==='hi'?'10 अंकों का मोबाइल नंबर':'10-digit mobile number';
-$('otp-code').placeholder=next==='hi'?'6 अंकों का OTP':'6-digit OTP';
 translateRepair();
 render();window.dispatchEvent(new CustomEvent('myworld-language-change',{detail:{lang:next}}));
 }
