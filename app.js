@@ -20,7 +20,7 @@ document.querySelector('.bottom').addEventListener('click',e=>{const b=e.target.
 
 // Full bilingual interface. Translation affects visible copy, not phone numbers, prices or external URLs.
 const translations={
-'header .brand small':['YOUR WORLD, ONE APP','YOUR WORLD, ONE APP'],
+'header .brand small':['Founded by Mr. Rahul Kumawat','Founded by Mr. Rahul Kumawat'],
 '.hero label':['✦ आपका डिजिटल संसार','✦ YOUR DIGITAL WORLD'],
 '.hero p':['रिचार्ज, शॉपिंग और रोज़मर्रा की डिजिटल सेवाएँ — एक ही जगह।','Recharge, shopping and everyday digital services — all in one place.'],
 '#explore':['सेवाएँ देखें ↗','Explore services ↗'],
