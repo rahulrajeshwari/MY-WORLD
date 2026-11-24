@@ -1,45 +1,19 @@
-// Firebase Phone Authentication. Configure firebase-config.js with your own Firebase web app settings.
-import { firebaseConfig } from './firebase-config.js';
-const msg=document.getElementById('login-message');
-const t=(hi,en)=>localStorage.getItem('myworld-lang')==='en'?en:hi;
-const send=document.getElementById('send-otp');
-const verify=document.getElementById('verify-otp');
-const otpStep=document.getElementById('otp-step');
-const phone=document.getElementById('phone-number');
-const dialog=document.getElementById('login-dialog');
-document.getElementById('close-login').onclick=()=>dialog.close();
-let auth, verifier, confirmation;
-const ready=Boolean(firebaseConfig.apiKey&&firebaseConfig.authDomain&&firebaseConfig.projectId&&firebaseConfig.appId);
-if(!ready){msg.textContent=t('OTP सेवा अभी सेटअप हो रही है। Firebase कॉन्फ़िगरेशन जुड़ने के बाद SMS भेजा जा सकेगा।','OTP login is being configured. SMS will work after Firebase setup is complete.');send.disabled=true;}
-else{
-  try{
-    const [{initializeApp},{getAuth,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut}]=await Promise.all([
-      import('https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js'),
-      import('https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js')
-    ]);
-    auth=getAuth(initializeApp(firebaseConfig));
-    auth.languageCode='hi';
-    onAuthStateChanged(auth,user=>{window.myWorldUser=user||null;document.getElementById('profile').textContent=user?'✓':'R';if(user){msg.textContent=t('लॉगिन सफल! ','Login successful! ')+user.phoneNumber;dialog.close();}});
-    window.myWorldLogout=()=>signOut(auth);
-    document.getElementById('login-form').addEventListener('submit',async e=>{
-      e.preventDefault();const number=phone.value.trim();
-      if(!/^[6-9][0-9]{9}$/.test(number)){msg.textContent=t('सही 10 अंकों का भारतीय मोबाइल नंबर डालें।','Enter a valid 10-digit Indian mobile number.');return}
-      send.disabled=true;msg.textContent=t('OTP भेजा जा रहा है...','Sending OTP...');
-      try{
-        if(!verifier){verifier=new RecaptchaVerifier(auth,'recaptcha-container',{size:'normal'});await verifier.render()}
-        confirmation=await signInWithPhoneNumber(auth,'+91'+number,verifier);
-        otpStep.hidden=false;msg.textContent=t('OTP भेज दिया गया है। SMS में मिला 6 अंकों का कोड डालें।','OTP sent. Enter the 6-digit code from your SMS.');
-      }catch(error){msg.textContent=t('OTP नहीं भेजा जा सका: ','Could not send OTP: ')+(error.code||'कृपया दोबारा प्रयास करें');send.disabled=false;}
-    });
-    verify.onclick=async()=>{
-      const code=document.getElementById('otp-code').value.trim();
-      if(!confirmation||!/^[0-9]{6}$/.test(code)){msg.textContent=t('सही 6 अंकों का OTP डालें।','Enter a valid 6-digit OTP.');return}
-      verify.disabled=true;msg.textContent=t('OTP वेरिफाई हो रहा है...','Verifying OTP...');
-      try{await confirmation.confirm(code);msg.textContent=t('लॉगिन सफल!','Login successful!');dialog.close()}
-      catch(error){msg.textContent=t('OTP वेरिफाई नहीं हुआ: ','OTP verification failed: ')+(error.code||'दोबारा प्रयास करें')}
-      finally{verify.disabled=false}
-    };
-  }catch(error){msg.textContent=t('लॉगिन सेवा लोड नहीं हुई। इंटरनेट कनेक्शन जाँचें।','Could not load login service. Check your internet connection.');send.disabled=true;}
-}
-
-window.addEventListener('myworld-language-change',()=>{if(!ready)msg.textContent=t('OTP सेवा अभी सेटअप हो रही है। Firebase कॉन्फ़िगरेशन जुड़ने के बाद SMS भेजा जा सकेगा।','OTP login is being configured. SMS will work after Firebase setup is complete.')});
+import {firebaseConfig} from './firebase-config.js';
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendEmailVerification,sendPasswordResetEmail,updateProfile,onAuthStateChanged,signOut,GoogleAuthProvider,signInWithPopup,reload} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+const $=id=>document.getElementById(id),auth=getAuth(initializeApp(firebaseConfig)),msg=$('login-message'),form=$('login-form');
+let register=false,busy=false;
+const say=s=>msg.textContent=s;
+const errors=e=>({'auth/operation-not-allowed':'This sign-in method is not enabled in Firebase.','auth/invalid-credential':'Email or password is incorrect.','auth/email-already-in-use':'Account already exists. Please log in.','auth/too-many-requests':'Too many attempts. Try again later.','auth/popup-blocked':'Allow popups or use email login.','auth/weak-password':'Choose a stronger password.'}[e.code]||('Request failed: '+(e.code||'Please try again')));
+async function run(fn){if(busy)return;busy=true;try{await fn()}catch(e){say(errors(e))}finally{busy=false}}
+function mode(v){register=v;$('register-fields').hidden=!v;$('account-name').required=v;$('account-password').autocomplete=v?'new-password':'current-password';$('account-submit').textContent=v?'Create Account':'Login';say('')}
+function render(u){window.myWorldUser=u||null;$('profile').textContent=u?'✓':'R';$('account-guest').hidden=!!u;$('account-member').hidden=!u;for(const id of ['account-email','account-password'])$(id).required=!u;$('account-name').required=!u&&register;if(u){let phone='';try{phone=localStorage.getItem('mw-contact-'+u.uid)||''}catch{}$('account-details').textContent=[u.displayName||'Customer',u.email||u.phoneNumber||'',u.emailVerified?'Email verified':'Email not verified',phone?'Mobile (this device only, unverified): '+phone:''].filter(Boolean).join('\n');$('account-verify').hidden=!u.email||u.emailVerified}}
+$('close-login').onclick=()=>$('login-dialog').close();$('mode-login').onclick=()=>mode(false);$('mode-register').onclick=()=>mode(true);
+onAuthStateChanged(auth,render);window.myWorldLogout=()=>signOut(auth);
+form.onsubmit=e=>{e.preventDefault();if(auth.currentUser)return;run(async()=>{const email=$('account-email').value.trim(),password=$('account-password').value;if(register){const name=$('account-name').value.trim();if(!name){say('Enter your full name.');return}const phone=$('account-phone').value.trim();if(phone&&!/^(?:\+91)?[6-9]\d{9}$/.test(phone)){say('Enter a valid Indian mobile number or leave blank.');return}const {user}=await createUserWithEmailAndPassword(auth,email,password);await updateProfile(user,{displayName:name});if(phone)try{localStorage.setItem('mw-contact-'+user.uid,phone)}catch{}render(user);say('Account created. Send verification email to verify your address.');try{await sendEmailVerification(user);say('Account created. Check your email for verification.')}catch(e){say('Account created. Verification email failed; retry from profile.')}}else{await signInWithEmailAndPassword(auth,email,password);say('Login successful.')} $('account-password').value=''})};
+$('account-reset').onclick=()=>run(async()=>{const email=$('account-email');if(!email.value||!email.checkValidity()){say('Enter a valid email first.');return}await sendPasswordResetEmail(auth,email.value.trim());say('If an account exists, check your email for reset instructions.')});
+$('account-google').onclick=()=>run(async()=>{await signInWithPopup(auth,new GoogleAuthProvider());say('Google login successful.')});
+$('account-verify').onclick=()=>run(async()=>{if(auth.currentUser){await sendEmailVerification(auth.currentUser);say('Verification email sent.')}});
+$('account-refresh').onclick=()=>run(async()=>{if(auth.currentUser){await reload(auth.currentUser);render(auth.currentUser);say(auth.currentUser.emailVerified?'Email verified.':'Email not verified yet.')}});
+$('account-logout').onclick=()=>run(async()=>{await signOut(auth);mode(false);say('Logged out.')});
+$('account-submit').disabled=false;$('account-google').disabled=false;
