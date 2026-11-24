@@ -1,9 +1,10 @@
-// Replace the empty strings with Firebase Console > Project settings > Your apps > Web app configuration.
-// Firebase API key is a public web configuration value; never put private service account keys here.
-export const firebaseConfig={
-  apiKey:'',
-  authDomain:'',
-  projectId:'',
-  appId:'',
-  messagingSenderId:''
+// Public Firebase web configuration; protect data with Firebase security rules.
+export const firebaseConfig = {
+  "apiKey": "AIzaSyB1BkLRTErVIAiCszr0qLdhBaisSdmj-pg",
+  "authDomain": "my-world-3fafc.firebaseapp.com",
+  "projectId": "my-world-3fafc",
+  "storageBucket": "my-world-3fafc.firebasestorage.app",
+  "messagingSenderId": "126186853515",
+  "appId": "1:126186853515:web:96e5468f737e7ac333b08e",
+  "measurementId": "G-D0QKWJL9BG"
 };
