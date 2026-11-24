@@ -37,7 +37,6 @@ const translations={
 '[data-service="recharge"] small':['प्रीपेड / पोस्टपेड','Prepaid / Postpaid'],
 '[data-service="dth"] b':['DTH और बिल','DTH & Bills'],
 '[data-service="dth"] small':['टीवी और यूटिलिटी','TV & Utilities'],
-'.service-link b':['ऑनलाइन शॉपिंग','Online Shopping'],
 '[data-service="finance"] b':['फाइनेंस','Finance'],
 '[data-service="finance"] small':['वित्तीय सेवाएँ','Financial Services'],
 '[data-service="retailer"] b':['रिटेलर बनें','Become a Retailer'],
