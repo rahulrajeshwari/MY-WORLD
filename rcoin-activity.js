@@ -4,7 +4,7 @@ import {getAuth,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/11.
 const auth=getAuth(getApps()[0]||initializeApp(firebaseConfig));
 let uid=null,elapsed=0,last=performance.now(),activity=last,earned=false;
 const page=location.pathname.split('/').pop()||'index.html';
-const eligible=!['index.html','upcoming-services.html','rcoin-wallet.html','new-version-update.html'].includes(page);
+const eligible=!['index.html','upcoming-services.html','rcoin-wallet.html','rcoin-admin.html','new-version-update.html'].includes(page);
 const key=()=> 'mw-rcoin-demo-'+uid;
 function balance(){try{return Math.max(0,Number(localStorage.getItem(key()))||0)}catch{return 0}}
 function render(){document.querySelectorAll('[data-rcoin-balance]').forEach(e=>e.textContent=uid?String(balance()):'Login required');}
