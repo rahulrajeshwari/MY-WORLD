@@ -115,7 +115,24 @@ const opened=window.open(url,'_blank','noopener,noreferrer');
 if(!opened)window.location.href=url;
 });
 
-if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  const sw=navigator.serviceWorker;
+  let previous=sw.controller, pending=false, reloading=false, lastActivity=Date.now(), reg, checking=false;
+  function safeReload(){
+    if(!pending||reloading||document.hidden||Date.now()-lastActivity<15000||document.querySelector('dialog[open]')||document.activeElement?.matches('input,textarea,select,[contenteditable=true]'))return;
+    reloading=true;location.reload();
+  }
+  for(const event of ['pointerdown','keydown','input','touchstart'])addEventListener(event,()=>{lastActivity=Date.now()},{passive:true});
+  sw.addEventListener('controllerchange',()=>{const next=sw.controller;if(previous&&next&&previous!==next){pending=true;}previous=next;});
+  async function checkUpdate(){if(!reg||checking||!navigator.onLine)return;checking=true;try{await reg.update()}catch{}finally{checking=false}}
+  async function start(){try{reg=await sw.register('./sw.js',{updateViaCache:'none'});await checkUpdate()}catch{}}
+  if(document.readyState==='complete')start();else addEventListener('load',start,{once:true});
+  setInterval(()=>{if(!document.hidden)checkUpdate()},60000);
+  setInterval(safeReload,3000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkUpdate();safeReload()}});
+  addEventListener('online',checkUpdate);
+  addEventListener('pageshow',checkUpdate);
+}
 let installPrompt=null;window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;});$('install').addEventListener('click',async()=>{if(installPrompt){const prompt=installPrompt;installPrompt=null;await prompt.prompt();return}pop(lang==='hi'?'MY WORLD इंस्टॉल करें':'Install MY WORLD',lang==='hi'?'Android Chrome में मेनू (⋮) खोलकर Add to Home screen या Install app चुनें। iPhone Safari में Share → Add to Home Screen चुनें।':'In Android Chrome, open the menu (⋮) and choose Add to Home screen or Install app. On iPhone Safari, choose Share → Add to Home Screen.')});window.addEventListener('appinstalled',()=>{$('install').hidden=true});
 
 // Informational RCoin value calculator. No wallet balance or issuance is simulated.
