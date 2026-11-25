@@ -3,9 +3,9 @@ import {initializeApp,getApps} from 'https://www.gstatic.com/firebasejs/11.10.0/
 import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut,getIdTokenResult} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 const auth=getAuth(getApps()[0]||initializeApp(firebaseConfig)),$=id=>document.getElementById(id);
 const status=$('admin-status');
-onAuthStateChanged(auth,async user=>{ $('admin-panel').hidden=true;$('admin-login').hidden=false;try{if(user){const token=await getIdTokenResult(user,true);if(auth.currentUser?.uid!==user.uid)return;if(token.claims.admin===true){$('admin-panel').hidden=false;$('admin-login').hidden=true;return}status.textContent='Signed in, but server-side Admin permission is not assigned. Sign out to switch accounts.'}else status.textContent='Enter your Firebase admin account.'}catch{status.textContent='Unable to verify admin permission.'}});
-$('admin-email').value='rahulkumar735738@gmail.com';
+onAuthStateChanged(auth,async user=>{ $('admin-panel').hidden=true;$('admin-login').hidden=false;try{if(user){const token=await getIdTokenResult(user,true);if(auth.currentUser?.uid!==user.uid)return;if(token.claims.admin===true&&user.emailVerified){$('admin-panel').hidden=false;$('admin-login').hidden=true;return}status.textContent='Signed in, but server-side Admin permission is not assigned. Sign out to switch accounts.'}else status.textContent='Enter your Firebase admin account.'}catch{status.textContent='Unable to verify admin permission.'}});
+$('admin-email').value='';
 $('admin-submit').disabled=false;
-$('admin-form').onsubmit=async e=>{e.preventDefault();$('admin-submit').disabled=true;try{await signInWithEmailAndPassword(auth,$('admin-email').value.trim(),$('admin-password').value);$('admin-password').value=''}catch{status.textContent='Login failed. Check your Firebase account and password.'}finally{$('admin-submit').disabled=false}};
+$('admin-form').onsubmit=async e=>{e.preventDefault();$('admin-submit').disabled=true;try{await signInWithEmailAndPassword(auth,$('admin-email').value.trim(),$('admin-password').value);$('admin-password').value=''}catch{status.textContent='Login failed. Check your Firebase account and password.'}finally{$('admin-password').value='';$('admin-submit').disabled=false}};
 $('admin-logout').onclick=()=>signOut(auth);
 const switcher=document.createElement('button');switcher.type='button';switcher.textContent='Sign out / Switch account';switcher.onclick=()=>signOut(auth);$('admin-login').append(switcher);
