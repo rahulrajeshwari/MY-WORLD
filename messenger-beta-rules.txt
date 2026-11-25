@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+ function verified(){return request.auth != null && request.auth.token.email_verified == true;}
+ function member(room){return verified() && request.auth.uid in get(/databases/$(database)/documents/mwChats/$(room)).data.members;}
+ match /mwUsernames/{name} {
+ allow get: if verified();
+ allow create: if verified() && name.matches('^[a-z0-9_]{4,24}$') && request.resource.data.keys().hasOnly(['uid']) && request.resource.data.uid == request.auth.uid;
+ }
+ match /mwChats/{room} {
+ allow get: if verified() && (!exists(/databases/$(database)/documents/mwChats/$(room)) || request.auth.uid in resource.data.members);
+ allow create: if verified() && request.resource.data.keys().hasOnly(['members']) && request.resource.data.members is list && request.resource.data.members.size()==2 && request.resource.data.members[0] is string && request.resource.data.members[1] is string && request.resource.data.members[0]!=request.resource.data.members[1] && request.auth.uid in request.resource.data.members;
+ match /messages/{id} {
+ allow read: if member(room);
+ allow create: if member(room) && request.resource.data.keys().hasOnly(['sender','text','created']) && request.resource.data.sender==request.auth.uid && request.resource.data.text is string && request.resource.data.text.size()>0 && request.resource.data.text.size()<=1000 && request.resource.data.created==request.time;
+ }
+ }
+ match /{document=**} {allow read,write: if false;}
+ }
+}
