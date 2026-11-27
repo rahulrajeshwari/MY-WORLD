@@ -73,10 +73,12 @@ const translations={
 '[data-nav="shop"] small':['शॉपिंग','Shopping'],
 '[data-nav="orders"] small':['ऑर्डर','Orders'],
 '[data-nav="account"] small':['अकाउंट','Account'],
-'#modal .ok':['समझ गया','Got it']
+'#modal .ok':['समझ गया','Got it'],
+'#mw-retailer-dashboard small':['जल्द आ रहा है','Coming Soon'],
+'#mw-commission-chart small':['जल्द आ रहा है','Coming Soon']
 };
 function setLanguage(next){
-lang=next;localStorage.setItem('myworld-lang',next);document.documentElement.lang=next;
+if(!['hi','en'].includes(next))return;lang=next;localStorage.setItem('myworld-lang',next);document.documentElement.lang=next;
 $('lang').textContent=next==='hi'?'हिंदी / EN':'English / HI';
 $('install').textContent=next==='hi'?'इंस्टॉल करें':'Install';
 document.querySelector('.hero h1').innerHTML=next==='hi'?'सब कुछ अब<br><em>MY WORLD</em> में':'Everything in<br><em>MY WORLD</em>';
@@ -90,6 +92,7 @@ document.querySelectorAll('.soon').forEach(el=>el.textContent=next==='hi'?'ज�
 document.querySelector('.partner button').textContent=next==='hi'?'जल्द आ रहा है':'COMING SOON';
 $('search').placeholder=next==='hi'?'प्रोडक्ट खोजें...':'Search products...';
 translateRepair();
+const picker=$('mw-app-language');if(picker)picker.value=next;
 render();window.dispatchEvent(new CustomEvent('myworld-language-change',{detail:{lang:next}}));
 }
 $('lang').onclick=()=>setLanguage(lang==='hi'?'en':'hi');
